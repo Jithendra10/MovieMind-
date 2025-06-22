@@ -16,3 +16,9 @@ def fetch_movies_from_tmdb(endpoint):
     except requests.exceptions.RequestException as e:
         print("TMDb API Error:", e)
         return {"results": []}
+
+def preprocess_movies(movies):
+        for movie in movies:
+            movie["display_title"] = movie.get("title") or movie.get("name") or "Untitled"
+            movie["display_rating"] = movie.get("vote_average", "N/A")
+        return movies

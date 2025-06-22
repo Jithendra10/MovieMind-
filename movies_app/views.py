@@ -3,18 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.urls import path
-from .utils import fetch_movies_from_tmdb
+from .utils import *
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 @login_required
 def home(request):
-    def preprocess_movies(movies):
-        for movie in movies:
-            # Ensure a safe display title
-            movie["display_title"] = movie.get("title") or movie.get("name") or "Untitled"
-            # Optional: handle missing rating
-            movie["display_rating"] = movie.get("vote_average", "N/A")
-        return movies
-
     trending = fetch_movies_from_tmdb("trending/movie/week")
     now_playing = fetch_movies_from_tmdb("movie/now_playing")
     upcoming = fetch_movies_from_tmdb("movie/upcoming")
@@ -28,7 +22,16 @@ def home(request):
     return render(request, "movies_app/home.html", context)
 
 
-
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'movies_app/signup.html', {'form': form})
 
 def custom_logout(request):
     logout(request)
