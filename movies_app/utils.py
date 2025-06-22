@@ -1,0 +1,18 @@
+from django.conf import settings
+import requests
+
+def fetch_movies_from_tmdb(endpoint):
+    url = f"https://api.themoviedb.org/3/{endpoint}?language=en-US&page=1"
+    
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {settings.TMDB_BEARER_TOKEN}"
+    }
+
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print("TMDb API Error:", e)
+        return {"results": []}
