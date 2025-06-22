@@ -6,79 +6,198 @@
     <meta charset="UTF-8">
     <title>MovieMind | Home</title>
     <link rel="stylesheet" href="{% static 'movies_app/home_style.css' %}">
+    <style>
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #111;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .nav-left, .nav-center, .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left {
+            gap: 10px;
+        }
+
+        .nav-center {
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-center .search-form {
+            display: flex;
+            width: 60%;
+        }
+
+        .search-form input[type="text"] {
+            flex: 1;
+            padding: 6px 10px;
+            border-radius: 4px 0 0 4px;
+            border: none;
+        }
+
+        .search-form button {
+            padding: 6px 10px;
+            border-radius: 0 4px 4px 0;
+            border: none;
+            background-color: #ffcc00;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .nav-right a,
+        .nav-right span {
+            margin-left: 20px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .rating-circle {
+            display: inline-block;
+            background-color: #ffcc00;
+            color: black;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .add-watchlist-form {
+            margin-top: 10px;
+        }
+
+        .watchlist-btn {
+            background: transparent;
+            color: #ffcc00;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .movie-card form {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- 🔸 Navigation -->
-    <nav class="navbar">
-        <div class="logo">
-            <h2>🎥 MovieMind</h2>
-        </div>
-        <div class="nav-items">
-            <a href="/">Home</a>
-            <a href="#">Watchlist</a>
-            <form action="#" method="get" class="search-form">
-                <input type="text" name="q" placeholder="Search movies...">
-                <button type="submit">🔍</button>
-            </form>
-            <span class="user">👤 {{ user.username }}</span>
-            <a href="{% url 'logout' %}">Logout</a>
-        </div>
-    </nav>
-
-    <!-- 🔹 Trending Movies -->
-    <div class="section">
-        <h2>🔥 Trending This Week</h2>
-        <div class="movie-list">
-            {% for movie in trending %}
-                <div class="movie-card">
-                    {% if movie.poster_path %}
-                        <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.display_title }}">
-                    {% else %}
-                        <img src="{% static 'movies_app/default_poster.jpg' %}" alt="No poster">
-                    {% endif %}
-                    <h4>{{ movie.display_title }}</h4>
-                    <p>⭐ {{ movie.display_rating }}/10</p>
-                </div>
-            {% endfor %}
-        </div>
+<!-- 🔸 Navigation -->
+<nav class="navbar">
+    <div class="nav-left">
+        <span class="menu-icon">☰</span>
+        <span class="brand">MovieMind</span>
     </div>
 
-    <!-- 🔹 Now Playing -->
-    <div class="section">
-        <h2>🎬 Now Playing</h2>
-        <div class="movie-list">
-            {% for movie in now_playing %}
-                <div class="movie-card">
-                    {% if movie.poster_path %}
-                        <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.display_title }}">
-                    {% else %}
-                        <img src="{% static 'movies_app/default_poster.jpg' %}" alt="No poster">
-                    {% endif %}
-                    <h4>{{ movie.display_title }}</h4>
-                    <p>⭐ {{ movie.display_rating }}/10</p>
-                </div>
-            {% endfor %}
-        </div>
+    <div class="nav-center">
+        <form action="#" method="get" class="search-form">
+            <input type="text" name="q" placeholder="Search movies...">
+            <button type="submit">🔍</button>
+        </form>
     </div>
 
-    <!-- 🔹 Upcoming -->
-    <div class="section">
-        <h2>🔮 Upcoming Movies</h2>
-        <div class="movie-list">
-            {% for movie in upcoming %}
-                <div class="movie-card">
-                    {% if movie.poster_path %}
-                        <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.display_title }}">
-                    {% else %}
-                        <img src="{% static 'movies_app/default_poster.jpg' %}" alt="No poster">
-                    {% endif %}
-                    <h4>{{ movie.display_title }}</h4>
-                    <p>⭐ {{ movie.display_rating }}/10</p>
-                </div>
-            {% endfor %}
-        </div>
+    <div class="nav-right">
+        <a href="{% url 'watchlist' %}" class="watchlist">🔖 Watchlist</a>
+        <span class="user">👤 {{ user.username }}</span>
+        <a href="{% url 'logout' %}">Logout</a>
     </div>
+</nav>
+
+<!-- 🔹 Trending Movies -->
+<div class="section">
+    <h2>🔥 Trending This Week</h2>
+    <div class="movie-list">
+        {% for movie in trending %}
+            <div class="movie-card">
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.display_title }}">
+                {% else %}
+                    <img src="{% static 'movies_app/default_poster.jpg' %}" alt="No poster">
+                {% endif %}
+                <h4>{{ movie.display_title }}</h4>
+                <div class="rating-circle">{{ movie.display_rating }}</div>
+
+                <form method="post" action="{% url 'add_to_watchlist' %}" class="add-watchlist-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- 🔹 Now Playing -->
+<div class="section">
+    <h2>🎬 Now Playing</h2>
+    <div class="movie-list">
+        {% for movie in now_playing %}
+            <div class="movie-card">
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.display_title }}">
+                {% else %}
+                    <img src="{% static 'movies_app/default_poster.jpg' %}" alt="No poster">
+                {% endif %}
+                <h4>{{ movie.display_title }}</h4>
+                <div class="rating-circle">{{ movie.display_rating }}</div>
+
+                <form method="post" action="{% url 'add_to_watchlist' %}" class="add-watchlist-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- 🔹 Upcoming -->
+<div class="section">
+    <h2>🔮 Upcoming Movies</h2>
+    <div class="movie-list">
+        {% for movie in upcoming %}
+            <div class="movie-card">
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.display_title }}">
+                {% else %}
+                    <img src="{% static 'movies_app/default_poster.jpg' %}" alt="No poster">
+                {% endif %}
+                <h4>{{ movie.display_title }}</h4>
+                <div class="rating-circle">{{ movie.display_rating }}</div>
+
+                <form method="post" action="{% url 'add_to_watchlist' %}" class="add-watchlist-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
 </body>
 </html>

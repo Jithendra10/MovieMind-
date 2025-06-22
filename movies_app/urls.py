@@ -3,6 +3,8 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
+    path('add-to-watchlist/', views.add_to_watchlist, name='add_to_watchlist'),
+    path('watchlist/', views.watchlist_view, name='watchlist'),
     path('signup/', views.signup, name='signup'),
     path('', views.home, name='home'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='movies_app/login.html'), name='login'),

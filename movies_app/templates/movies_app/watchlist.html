@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Watchlist | MovieMind</title>
+    <link rel="stylesheet" href="{% static 'movies_app/home_style.css' %}">
+</head>
+<body>
+
+    <div class="section">
+        <h2>📌 My Watchlist</h2>
+
+        {% if watchlist %}
+        <div class="movie-list">
+            {% for movie in watchlist %}
+                <div class="movie-card">
+                    {% if movie.poster_path %}
+                        <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }}">
+                    {% else %}
+                        <img src="{% static 'movies_app/default_poster.jpg' %}" alt="No poster">
+                    {% endif %}
+                    <h4>{{ movie.title }}</h4>
+                    <p>⭐ {{ movie.vote_average|default:"N/A" }}/10</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p style="margin: 20px;">Your watchlist is empty!</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -1,3 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+class Watchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie_id = models.IntegerField()
+    title = models.CharField(max_length=255)
+    poster_path = models.CharField(max_length=255, blank=True, null=True)
+    overview = models.TextField(blank=True, null=True)
+    cast = models.TextField(blank=True, null=True)
+    director = models.CharField(max_length=255, blank=True, null=True)
+    vote_average = models.FloatField(blank=True, null=True)
+    release_date = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        unique_together = ('user', 'movie_id')
+
+    def __str__(self):
+        return f"{self.title} ({self.movie_id})"

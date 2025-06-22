@@ -5,51 +5,89 @@ body {
     margin: 0;
     padding: 0;
 }
-
 .navbar {
-    background-color: #1c1c1c;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    justify-content: space-between;
+    background-color: #111;
+    padding: 10px 20px;
+    color: white;
 }
 
-.nav-items a, .user {
-    margin-left: 20px;
-    color: #f0f0f0;
-    text-decoration: none;
+.nav-left, .nav-center, .nav-right {
+    display: flex;
+    align-items: center;
 }
 
-.search-form input {
-    padding: 5px;
-    border-radius: 5px;
+.nav-left {
+    gap: 10px;
+}
+
+.nav-center {
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-center .search-form {
+    display: flex;
+    width: 60%;
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 4px 0 0 4px;
     border: none;
 }
 
 .search-form button {
-    padding: 5px;
-    margin-left: 5px;
+    padding: 6px 10px;
+    border-radius: 0 4px 4px 0;
+    border: none;
+    background-color: #ffcc00;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.section {
-    margin: 30px;
+.nav-right a,
+.nav-right span {
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
 }
 
-.movie-list {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+.menu-icon {
+    font-size: 22px;
+    cursor: pointer;
 }
 
-.movie-card {
-    background-color: #222;
-    padding: 10px;
-    border-radius: 8px;
-    width: 180px;
+.rating-circle {
+    display: inline-block;
+    background-color: #ffcc00;
+    color: black;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
     text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
-.movie-card img {
-    width: 100%;
-    border-radius: 5px;
+.add-watchlist-form {
+    margin-top: 10px;
+}
+
+.watchlist-btn {
+    background: transparent;
+    color: #ffcc00;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.movie-card form {
+    display: flex;
+    justify-content: center;
 }

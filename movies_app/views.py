@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.urls import path
+
+from movies_app.models import *
 from .utils import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
@@ -32,6 +34,28 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'movies_app/signup.html', {'form': form})
+
+def watchlist_view(request):
+    user_watchlist = Watchlist.objects.filter(user=request.user)
+    return render(request, "movies_app/watchlist.html", {"watchlist": user_watchlist})
+
+def add_to_watchlist(request):
+    if request.method == "POST":
+        movie_id = request.POST.get("movie_id")
+        title = request.POST.get("title")
+        poster_path = request.POST.get("poster_path")
+        vote_average = request.POST.get("vote_average")
+
+        Watchlist.objects.get_or_create(
+            user=request.user,
+            movie_id=movie_id,
+            defaults={
+                "title": title,
+                "poster_path": poster_path,
+                "vote_average": vote_average,
+            }
+        )
+    return redirect("home")
 
 def custom_logout(request):
     logout(request)
