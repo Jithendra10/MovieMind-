@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liked Movies</title>
+    <link rel="stylesheet" href="{% static 'movies_app/home_style.css' %}">
+</head>
+<body>
+
+<!-- 🔸 Navigation -->
+<nav class="navbar">
+    <div class="nav-left">
+        <a href="{% url 'home' %}" class="brand">🏠 MovieMind</a>
+    </div>
+    <div class="nav-right">
+        <a href="{% url 'watchlist' %}" class="watchlist">🔖 Watchlist</a>
+        <span class="user">👤 {{ user.username }}</span>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+
+<div class="section">
+    <h2>❤️ Liked Movies</h2>
+    {% if liked_movies %}
+        <div class="movie-list">
+            {% for movie in liked_movies %}
+                <div class="movie-card">
+                    <img src="{% if movie.poster_path %}https://image.tmdb.org/t/p/w300{{ movie.poster_path }}{% else %}{% static 'movies_app/default_poster.jpg' %}{% endif %}" alt="{{ movie.title }}">
+                    <h4>{{ movie.title }}</h4>
+                    <div class="rating-circle">{{ movie.vote_average }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No liked movies yet.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

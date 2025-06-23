@@ -34,6 +34,7 @@ body {
 .menu-icon {
     font-size: 22px;
     cursor: pointer;
+    user-select: none;
 }
 
 .nav-center {
@@ -113,11 +114,18 @@ body {
     margin-top: 10px;
 }
 
-.add-watchlist-form {
+.action-buttons {
+    display: flex;
+    justify-content: space-around;
     margin-top: 10px;
 }
 
-.watchlist-btn {
+.action-buttons form {
+    margin: 0;
+}
+
+.watchlist-btn,
+.like-btn {
     background: transparent;
     color: #ffcc00;
     border: none;
@@ -125,7 +133,45 @@ body {
     cursor: pointer;
 }
 
-.movie-card form {
-    display: flex;
-    justify-content: center;
+/* Sidebar menu */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    background-color: #222;
+    padding: 60px 20px 20px;
+    height: 100%;
+    border-right: 1px solid #444;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    z-index: 999;
+}
+
+.sidebar.show {
+    transform: translateX(0);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.sidebar ul li a:hover {
+    color: #ffcc00;
+}
+
+.hidden {
+    display: none;
 }

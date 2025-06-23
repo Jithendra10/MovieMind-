@@ -57,6 +57,28 @@ def add_to_watchlist(request):
         )
     return redirect("home")
 
+def like_movie(request):
+    if request.method == "POST":
+        movie_id = request.POST.get("movie_id")
+        title = request.POST.get("title")
+        poster_path = request.POST.get("poster_path")
+        vote_average = request.POST.get("vote_average")
+
+        LikedMovie.objects.get_or_create(
+            user=request.user,
+            movie_id=movie_id,
+            defaults={
+                "title": title,
+                "poster_path": poster_path,
+                "vote_average": vote_average
+            }
+        )
+    return redirect('home')
+
+def liked_movies(request):
+    liked = LikedMovie.objects.filter(user=request.user)
+    return render(request, 'movies_app/liked_movies.html', {'liked_movies': liked})
+
 def custom_logout(request):
     logout(request)
     return redirect('login')

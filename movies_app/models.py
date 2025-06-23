@@ -17,3 +17,15 @@ class Watchlist(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.movie_id})"
+
+class LikedMovie(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie_id = models.CharField(max_length=50)
+    title = models.CharField(max_length=255)
+    poster_path = models.CharField(max_length=255, null=True, blank=True)
+    vote_average = models.FloatField(null=True, blank=True)
+    liked_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
