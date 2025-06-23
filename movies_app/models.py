@@ -28,4 +28,20 @@ class LikedMovie(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Top1000Movie(models.Model):
+    poster_link = models.URLField(null=True, blank=True)
+    title = models.CharField(max_length=255)
+    released_year = models.IntegerField(null=True, blank=True)
+    runtime = models.CharField(max_length=50, null=True, blank=True)
+    genre = models.CharField(max_length=255, null=True, blank=True)
+    imdb_rating = models.FloatField(null=True, blank=True)
+    overview = models.TextField(null=True, blank=True)
+    director = models.CharField(max_length=255, null=True, blank=True)
+    star1 = models.CharField(max_length=255, null=True, blank=True)
+    star2 = models.CharField(max_length=255, null=True, blank=True)
+    star3 = models.CharField(max_length=255, null=True, blank=True)
+    star4 = models.CharField(max_length=255, null=True, blank=True)
 
+    def __str__(self):
+        return self.title
