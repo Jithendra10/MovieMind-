@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .navbar {
     display: flex;
     align-items: center;
@@ -12,6 +13,7 @@ body {
     background-color: #111;
     padding: 10px 20px;
     color: white;
+    flex-wrap: wrap;
 }
 
 .nav-left, .nav-center, .nav-right {
@@ -23,12 +25,23 @@ body {
     gap: 10px;
 }
 
+.brand {
+    font-weight: bold;
+    color: #ffcc00;
+    font-size: 18px;
+}
+
+.menu-icon {
+    font-size: 22px;
+    cursor: pointer;
+}
+
 .nav-center {
     flex: 1;
     justify-content: center;
 }
 
-.nav-center .search-form {
+.search-form {
     display: flex;
     width: 60%;
 }
@@ -38,6 +51,7 @@ body {
     padding: 6px 10px;
     border-radius: 4px 0 0 4px;
     border: none;
+    font-size: 14px;
 }
 
 .search-form button {
@@ -50,16 +64,40 @@ body {
     cursor: pointer;
 }
 
-.nav-right a,
-.nav-right span {
-    margin-left: 20px;
-    color: white;
-    text-decoration: none;
+.nav-right {
+    gap: 20px;
 }
 
-.menu-icon {
-    font-size: 22px;
-    cursor: pointer;
+.nav-right a,
+.nav-right span {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.section {
+    margin: 30px;
+}
+
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.movie-card {
+    background-color: #222;
+    padding: 10px;
+    border-radius: 8px;
+    width: 180px;
+    text-align: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.movie-card img {
+    width: 100%;
+    border-radius: 5px;
 }
 
 .rating-circle {
