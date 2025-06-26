@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ movie.title }} | MovieMind</title>
+    <link rel="stylesheet" href="{% static 'movies_app/home_style.css' %}">
+    <style>
+        .movie-detail {
+            max-width: 900px;
+            margin: 40px auto;
+            display: flex;
+            gap: 30px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+        }
+        .movie-detail img {
+            width: 300px;
+            border-radius: 5px;
+        }
+        .info {
+            color: #fff;
+        }
+        .info h2 {
+            color: #ffcc00;
+        }
+        .info p {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left"><a href="{% url 'home' %}" class="brand">← Home</a></div>
+    <div class="nav-right"><span class="user">👤 {{ user.username }}</span></div>
+</nav>
+
+<div class="movie-detail">
+    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+    <div class="info">
+        <h2>{{ movie.title }} ({{ movie.release_date|slice:":4" }})</h2>
+        <p><strong>Rating:</strong> {{ movie.vote_average }}/10</p>
+        <p><strong>Runtime:</strong> {{ movie.runtime }} minutes</p>
+        <p><strong>Genres:</strong> 
+            {% for genre in movie.genres %}
+                {{ genre.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p><strong>Overview:</strong> {{ movie.overview }}</p>
+    </div>
+</div>
+
+</body>
+</html>

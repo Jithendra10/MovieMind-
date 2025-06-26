@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Rated Movies</title>
+    <link rel="stylesheet" href="{% static 'movies_app/home_style.css' %}">
+</head>
+<body>
+
+<!-- 🔙 Back to home link -->
+<nav class="navbar">
+    <div class="nav-left">
+        <a href="{% url 'home' %}" class="brand">← Back to Home</a>
+    </div>
+    <div class="nav-right">
+        <span class="user">👤 {{ user.username }}</span>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+
+<!-- 🔝 Top Rated Section -->
+<div class="section">
+    <h2>🌟 Top Rated Movies</h2>
+    <div class="movie-list">
+        {% for movie in page_obj %}
+            <div class="movie-card">
+                <img src="{{ movie.poster_link }}" alt="{{ movie.title }}">
+                <h4>{{ movie.title }}</h4>
+                <div class="rating-circle">{{ movie.imdb_rating }}</div>
+                <p style="font-size: 12px;">{{ movie.released_year }} • {{ movie.genre }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- 📜 Pagination -->
+    <div style="text-align: center; margin-top: 20px;">
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" style="color: #ffcc00;">Show More ⏩</a>
+        {% else %}
+            <p>No more movies to show.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

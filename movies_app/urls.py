@@ -11,4 +11,7 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(template_name='movies_app/login.html'), name='login'),
     path('logout/', views.custom_logout, name='logout'), 
     path('liked/', views.liked_movies, name='liked_movies'),
+    path('top-rated/', views.top_rated_movies, name='top_rated_movies'),
+    path("movie/tmdb/<int:movie_id>/", views.tmdb_movie_detail, name="tmdb_movie_detail"),
+
 ]

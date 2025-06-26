@@ -35,6 +35,7 @@
     <ul>
         <li><a href="{% url 'home' %}">🏠 Home</a></li>
         <li><a href="{% url 'liked_movies' %}">❤️ Liked Movies</a></li>
+        <li><a href="{% url 'top_rated_movies' %}">🌟 Top Rated</a></li>
         <li><a href="#">🤖 ML</a></li>
     </ul>
 </div>
@@ -44,30 +45,31 @@
     <h2>🔥 Trending This Week</h2>
     <div class="movie-list">
         {% for movie in trending %}
-            <div class="movie-card">
+        <div class="movie-card">
+            <a href="{% url 'tmdb_movie_detail' movie.id %}" class="movie-card-link">
                 <img src="{% if movie.poster_path %}https://image.tmdb.org/t/p/w300{{ movie.poster_path }}{% else %}{% static 'movies_app/default_poster.jpg' %}{% endif %}" alt="{{ movie.display_title }}">
                 <h4>{{ movie.display_title }}</h4>
                 <div class="rating-circle">{{ movie.display_rating }}</div>
-                <div class="action-buttons">
-                    <form method="post" action="{% url 'like_movie' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                        <input type="hidden" name="title" value="{{ movie.display_title }}">
-                        <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
-                        <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
-                        <button type="submit" class="like-btn" title="Like">❤️</button>
-                    </form>
-
-                    <form method="post" action="{% url 'add_to_watchlist' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                        <input type="hidden" name="title" value="{{ movie.display_title }}">
-                        <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
-                        <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
-                        <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
-                    </form>
-                </div>
+            </a>
+            <div class="action-buttons">
+                <form method="post" action="{% url 'like_movie' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="like-btn" title="Like">❤️</button>
+                </form>
+                <form method="post" action="{% url 'add_to_watchlist' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
+                </form>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
@@ -77,30 +79,31 @@
     <h2>🎬 Now Playing</h2>
     <div class="movie-list">
         {% for movie in now_playing %}
-            <div class="movie-card">
+        <div class="movie-card">
+            <a href="{% url 'tmdb_movie_detail' movie.id %}" class="movie-card-link">
                 <img src="{% if movie.poster_path %}https://image.tmdb.org/t/p/w300{{ movie.poster_path }}{% else %}{% static 'movies_app/default_poster.jpg' %}{% endif %}" alt="{{ movie.display_title }}">
                 <h4>{{ movie.display_title }}</h4>
                 <div class="rating-circle">{{ movie.display_rating }}</div>
-                <div class="action-buttons">
-                    <form method="post" action="{% url 'like_movie' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                        <input type="hidden" name="title" value="{{ movie.display_title }}">
-                        <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
-                        <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
-                        <button type="submit" class="like-btn" title="Like">❤️</button>
-                    </form>
-
-                    <form method="post" action="{% url 'add_to_watchlist' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                        <input type="hidden" name="title" value="{{ movie.display_title }}">
-                        <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
-                        <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
-                        <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
-                    </form>
-                </div>
+            </a>
+            <div class="action-buttons">
+                <form method="post" action="{% url 'like_movie' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="like-btn" title="Like">❤️</button>
+                </form>
+                <form method="post" action="{% url 'add_to_watchlist' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
+                </form>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
@@ -110,30 +113,31 @@
     <h2>🔮 Upcoming Movies</h2>
     <div class="movie-list">
         {% for movie in upcoming %}
-            <div class="movie-card">
+        <div class="movie-card">
+            <a href="{% url 'tmdb_movie_detail' movie.id %}" class="movie-card-link">
                 <img src="{% if movie.poster_path %}https://image.tmdb.org/t/p/w300{{ movie.poster_path }}{% else %}{% static 'movies_app/default_poster.jpg' %}{% endif %}" alt="{{ movie.display_title }}">
                 <h4>{{ movie.display_title }}</h4>
                 <div class="rating-circle">{{ movie.display_rating }}</div>
-                <div class="action-buttons">
-                    <form method="post" action="{% url 'like_movie' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                        <input type="hidden" name="title" value="{{ movie.display_title }}">
-                        <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
-                        <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
-                        <button type="submit" class="like-btn" title="Like">❤️</button>
-                    </form>
-
-                    <form method="post" action="{% url 'add_to_watchlist' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                        <input type="hidden" name="title" value="{{ movie.display_title }}">
-                        <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
-                        <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
-                        <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
-                    </form>
-                </div>
+            </a>
+            <div class="action-buttons">
+                <form method="post" action="{% url 'like_movie' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="like-btn" title="Like">❤️</button>
+                </form>
+                <form method="post" action="{% url 'add_to_watchlist' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="title" value="{{ movie.display_title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="vote_average" value="{{ movie.display_rating }}">
+                    <button type="submit" class="watchlist-btn" title="Add to Watchlist">➕</button>
+                </form>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
